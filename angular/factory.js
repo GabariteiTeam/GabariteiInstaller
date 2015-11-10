@@ -77,6 +77,16 @@
 			});
 		}
 
+		function prepare_database(path) {
+			var exec 	= require('child_process').exec;
+			var command = "cd " + path + " && rake db:lazy";
+			console.log(command);
+			var child 	= exec(command, function(error, stdout, stderr){
+				console.log(stdout);
+				next_step_success();
+			});
+		}
+
 		function check_error(stderr) {
 			if(stderr.length > 0) {
 				this.close();
@@ -121,6 +131,7 @@
 			install_gems: install_gems,
 			install_node_apps: install_node_apps,
 			install_bower_files: install_bower_files,
+			prepare_database: prepare_database,
 			next_step_success: function(_next_step_success) { next_step_success = _next_step_success},
 			next_step_error: next_step_error
 		}

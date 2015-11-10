@@ -4,16 +4,16 @@
 	angular
         .module(APP_NAME)
         .controller('InstallController', InstallController);
-    
+
     InstallController.$inject = ['$scope', 'Installer'];
     function InstallController($scope, Installer) {
     	var vm     = this;
         vm.output  = [];
     	vm.env     = {};
         vm.debug   = true;
-        vm.path    = "/opt/gabaritei-project/";
+        vm.path    = "~/gabaritei-project/";
 
-    	
+
     	Installer.set_env(vm.env);
     	Installer.verify_os();
     	Installer.next_step_success(install_with_ruby);
@@ -62,18 +62,23 @@
             Installer.install_bower_files(vm.path);
         }
 
-        function install_db(){
+        function install_db() {
             print_log("Bower files installed with success!");
             print_log("Getting db ready...");
-            
+						Installer.next_step_success(end_install);
+						Installer.prepare_database(vm.path);
         }
+
+				function end_install() {
+					window.close();
+				}
 
 
     	function print_log(msg) {
     		if(vm.debug) {
                 console.log(msg);
             }
-    		
+
     	}
     }
 
