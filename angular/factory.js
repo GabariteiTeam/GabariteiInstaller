@@ -16,7 +16,7 @@
 		}
 
 		function verify_ruby() {
-			if(is_mac()) {
+			if(is_unix()) {
 				var exec 	= require('child_process').exec;
 				var child 	= exec("which ruby", function(error, stdout, stderr){
 					set_path(stdout, "ruby_path");
@@ -25,7 +25,7 @@
 		}
 
 		function verify_node() {
-			if(is_mac()) {
+			if(is_unix()) {
 				var exec 	= require('child_process').exec;
 				var child 	= exec("which node", function(error, stdout, stderr){
 					set_path(stdout, "node_path");
@@ -34,7 +34,7 @@
 		}
 
 		function verify_git() {
-			if(is_mac()) {
+			if(is_unix()) {
 				var exec 	= require('child_process').exec;
 				var child 	= exec("which git", function(error, stdout, stderr){
 					set_path(stdout, "git_path");
@@ -90,8 +90,8 @@
 				  }
 		}
 
-		function is_mac() {
-			return env.OS == 'MAC';
+		function is_unix() {
+			return (env.OS == 'MAC' || env.OS == 'LINUX');
 		}
 
 		function verify_os() {
@@ -100,13 +100,16 @@
 					env.OS = 'MAC';
 				break;
 				case 'win32':
-					env.OS = 'WIN'
+					env.OS = 'WIN';
+					break;
+				case 'linux':
+					env.OS = 'LINUX';
 				break;
 			}
 			return env.OS;
 		}
 
-		
+
 
 		return {
 			set_env: set_env,
