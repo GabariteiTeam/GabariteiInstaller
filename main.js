@@ -26,7 +26,7 @@ app.on('ready', function() {
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
   // Open the DevTools.
-  mainWindow.openDevTools();
+  //mainWindow.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
@@ -35,4 +35,8 @@ app.on('ready', function() {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+});
+
+app.on('window-all-closed', function() {
+  app.quit();
 });

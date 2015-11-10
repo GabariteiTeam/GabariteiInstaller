@@ -12,6 +12,7 @@
     	vm.env     = {};
         vm.debug   = true;
         vm.path    = "~/gabaritei-project/";
+        updateProgressBar("0");
 
 
     	Installer.set_env(vm.env);
@@ -20,6 +21,7 @@
     	Installer.verify_ruby();
 
     	function install_with_ruby() {
+            updateProgressBar(5);
     		print_log("Ruby interperter was found!");
     		print_log("PATH: " + vm.env.ruby_path);
             Installer.next_step_success(install_with_node);
@@ -27,6 +29,7 @@
     	}
 
         function install_with_node() {
+            updateProgressBar(10);
             print_log("Node interperter was found!");
             print_log("PATH: " + vm.env.node_path);
             Installer.next_step_success(install_with_git);
@@ -34,6 +37,7 @@
         }
 
         function install_with_git() {
+            updateProgressBar(15);
             print_log("Git was found!");
             print_log("PATH: " + vm.env.node_path);
             Installer.next_step_success(git_cloned);
@@ -41,6 +45,7 @@
         }
 
         function git_cloned(PATH) {
+            updateProgressBar(30);
             print_log("Git was cloned with sucess!");
             print_log("Starting install of ruby gems...");
             Installer.next_step_success(install_node_packages);
@@ -48,6 +53,7 @@
         }
 
         function install_node_packages() {
+            updateProgressBar(50);
             print_log("Ruby gem installed!");
             print_log("Installing node packages...");
             Installer.next_step_success(install_bower_files);
@@ -55,6 +61,7 @@
         }
 
         function install_bower_files() {
+            updateProgressBar(80);
             print_log("Installed node packages!");
             print_log("Preparing to install bower files");
 
@@ -63,15 +70,17 @@
         }
 
         function install_db() {
+            updateProgressBar(100);
             print_log("Bower files installed with success!");
             print_log("Getting db ready...");
 						Installer.next_step_success(end_install);
 						Installer.prepare_database(vm.path);
         }
 
-				function end_install() {
-					window.close();
-				}
+		function end_install() {
+            updateProgressBar(100);
+			window.close();
+		}
 
 
     	function print_log(msg) {
