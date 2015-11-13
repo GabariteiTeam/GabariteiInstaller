@@ -7,18 +7,24 @@
 
     InstallController.$inject = ['$scope', 'Installer'];
     function InstallController($scope, Installer) {
-    	var vm     = this;
-        vm.output  = [];
-    	vm.env     = {};
-        vm.debug   = true;
-        vm.path    = "~/gabaritei-project/";
+    	var vm          = this;
+        vm.output       = [];
+    	vm.env          = {};
+        vm.debug        = true;
+        vm.path         = "~/gabaritei-project/";
+        vm.quit_app     = quit_app;
         updateProgressBar("0");
 
 
     	Installer.set_env(vm.env);
     	Installer.verify_os();
     	Installer.next_step_success(install_with_ruby);
+        Installer.next_step_error(error_handler);
     	Installer.verify_ruby();
+
+        function quit_app() {
+            window.close();
+        }
 
     	function install_with_ruby() {
             updateProgressBar(5);
@@ -73,14 +79,21 @@
             updateProgressBar(100);
             print_log("Bower files installed with success!");
             print_log("Getting db ready...");
-						Installer.next_step_success(end_install);
-						Installer.prepare_database(vm.path);
+			Installer.next_step_success(end_install);
+			Installer.prepare_database(vm.path);
         }
 
 		function end_install() {
             updateProgressBar(100);
 			window.close();
 		}
+
+        function error_handler(msg) {
+            vm.error_msg = msg;
+            $("#error_modal").modal();
+            setTimeout(quit_app, 3000);
+            $scope.$digest();
+        }
 
 
     	function print_log(msg) {

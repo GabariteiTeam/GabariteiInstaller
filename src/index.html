@@ -29,7 +29,22 @@
     </div>
   </div>
 
+  <div id="error_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Error!</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{Ctrl.error_msg}}</p>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
 
+  <script src="js/bootstrap.min.js"></script>
   <script src="js/angular.min.js"></script>
   <script src="js/angular-resource.min.js"></script>
   <script src="angular/app.js"></script>
